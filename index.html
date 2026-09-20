@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="The Good Pantry — real food, simply sourced. Everyday healthy pantry essentials delivered to your door." />
+  <title>The Good Pantry</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300&family=Inter:wght@300;400;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ========== HEADER ========== -->
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a href="/" class="site-header__logo" aria-label="The Good Pantry — home">
+        The Good Pantry
+      </a>
+      <nav class="site-nav" aria-label="Main navigation">
+        <ul class="site-nav__list" role="list">
+          <li><a href="#shop" class="site-nav__link">Shop</a></li>
+          <li><a href="#about" class="site-nav__link">About</a></li>
+          <li><a href="#recipes" class="site-nav__link">Recipes</a></li>
+          <li><a href="#contact" class="site-nav__link">Contact</a></li>
+        </ul>
+      </nav>
+      <a href="#shop" class="btn btn--primary site-header__cta">Shop Now</a>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ========== 1. HERO ========== -->
+    <section class="hero" aria-labelledby="hero-heading">
+      <div class="container hero__inner">
+
+        <div class="hero__content">
+          <p class="eyebrow">Real food. Simple ingredients.</p>
+          <h1 class="hero__heading" id="hero-heading">Your pantry,<br />done right.</h1>
+          <p class="hero__body">We pick the good stuff so you don't have to — everyday essentials with ingredients you can actually read.</p>
+          <div class="hero__actions">
+            <a href="#shop" class="btn btn--primary">Shop the Store</a>
+            <a href="#new-arrivals" class="hero__secondary-link">See what's new →</a>
+          </div>
+        </div>
+
+        <div class="hero__visual">
+          <div class="hero__image-card">
+            <img
+              src="assets/images/hero-product.webp"
+              alt="A curated selection of Good Pantry essentials — oats, olive oil, nut butter and tea arranged on a linen surface"
+              class="hero__image"
+              width="560"
+              height="480"
+            />
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========== 2. SHOP BY CATEGORY ========== -->
+    <section class="categories" id="shop" aria-labelledby="categories-heading">
+      <div class="container">
+        <h2 class="categories__heading" id="categories-heading">Shop by Category</h2>
+        <ul class="categories__list" role="list">
+          <li class="category-item" id="breakfast">
+            <a href="#breakfast" class="category-item__link">
+              <img
+                src="assets/images/category-breakfast.webp"
+                alt="Bowl of granola and oats"
+                class="category-item__image"
+                width="240"
+                height="200"
+                loading="lazy"
+                decoding="async"
+              />
+              <span class="category-item__name">Breakfast</span>
+              <span class="category-item__descriptor">Oats, granola &amp; morning staples</span>
+            </a>
+          </li>
+          <li class="category-item" id="snacks">
+            <a href="#snacks" class="category-item__link">
+              <img
+                src="assets/images/category-snacks.webp"
+                alt="Mixed nuts and snack bars on a wooden board"
+                class="category-item__image"
+                width="240"
+                height="200"
+                loading="lazy"
+                decoding="async"
+              />
+              <span class="category-item__name">Snacks</span>
+              <span class="category-item__descriptor">Nuts, bars &amp; honest bites</span>
+            </a>
+          </li>
+          <li class="category-item" id="pantry">
+            <a href="#pantry" class="category-item__link">
+              <img
+                src="assets/images/category-pantry.webp"
+                alt="Jars of grains, oils and pantry staples on a shelf"
+                class="category-item__image"
+                width="240"
+                height="200"
+                loading="lazy"
+                decoding="async"
+              />
+              <span class="category-item__name">Pantry</span>
+              <span class="category-item__descriptor">Oils, grains, sauces &amp; the basics</span>
+            </a>
+          </li>
+          <li class="category-item" id="drinks">
+            <a href="#drinks" class="category-item__link">
+              <img
+                src="assets/images/category-drinks.webp"
+                alt="Glass of iced tea alongside loose leaf tea and juice bottles"
+                class="category-item__image"
+                width="240"
+                height="200"
+                loading="lazy"
+                decoding="async"
+              />
+              <span class="category-item__name">Drinks</span>
+              <span class="category-item__descriptor">Teas, juices &amp; everyday sips</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ========== 3. BEST SELLERS ========== -->
+    <section class="best-sellers" id="best-sellers" aria-labelledby="best-sellers-heading">
+      <div class="container">
+        <p class="eyebrow">Customer Favourites</p>
+        <h2 class="best-sellers__heading" id="best-sellers-heading">What people keep coming back for</h2>
+        <ul class="product-grid" role="list">
+
+          <li class="product-card">
+            <a href="#product-oat-clusters" class="product-card__image-link" aria-label="View Rolled Oat Clusters">
+              <img
+                src="assets/images/product-oat-clusters.webp"
+                alt="Bag of Rolled Oat Clusters — lightly toasted oats with honey"
+                class="product-card__image"
+                width="320"
+                height="280"
+                loading="lazy"
+                decoding="async"
+              />
+            </a>
+            <div class="product-card__body">
+              <span class="product-card__badge pill">Breakfast</span>
+              <h3 class="product-card__name">Rolled Oat Clusters</h3>
+              <p class="product-card__description">Lightly toasted oats with a touch of honey</p>
+              <div class="product-card__meta">
+                <span class="product-card__rating" aria-label="Rated 4.8 out of 5">4.8 ★</span>
+                <span class="product-card__price">£4.50</span>
+              </div>
+              <button class="btn btn--primary product-card__cta" type="button">Add to Cart</button>
+            </div>
+          </li>
+
+          <li class="product-card">
+            <a href="#product-nut-butter" class="product-card__image-link" aria-label="View Mixed Nut Butter">
+              <img
+                src="assets/images/product-nut-butter.webp"
+                alt="Jar of Mixed Nut Butter containing cashew, almond and hazelnut"
+                class="product-card__image"
+                width="320"
+                height="280"
+                loading="lazy"
+                decoding="async"
+              />
+            </a>
+            <div class="product-card__body">
+              <span class="product-card__badge pill">Snacks</span>
+              <h3 class="product-card__name">Mixed Nut Butter</h3>
+              <p class="product-card__description">Cashew, almond & hazelnut — nothing else</p>
+              <div class="product-card__meta">
+                <span class="product-card__rating" aria-label="Rated 4.9 out of 5">4.9 ★</span>
+                <span class="product-card__price">£6.95</span>
+              </div>
+              <button class="btn btn--primary product-card__cta" type="button">Add to Cart</button>
+            </div>
+          </li>
+
+          <li class="product-card">
+            <a href="#product-olive-oil" class="product-card__image-link" aria-label="View Cold-Pressed Olive Oil">
+              <img
+                src="assets/images/product-olive-oil.webp"
+                alt="Bottle of Cold-Pressed Olive Oil — single-origin, first cold press"
+                class="product-card__image"
+                width="320"
+                height="280"
+                loading="lazy"
+                decoding="async"
+              />
+            </a>
+            <div class="product-card__body">
+              <span class="product-card__badge pill">Pantry</span>
+              <h3 class="product-card__name">Cold-Pressed Olive Oil</h3>
+              <p class="product-card__description">Single-origin, first cold press</p>
+              <div class="product-card__meta">
+                <span class="product-card__rating" aria-label="Rated 4.7 out of 5">4.7 ★</span>
+                <span class="product-card__price">£8.50</span>
+              </div>
+              <button class="btn btn--primary product-card__cta" type="button">Add to Cart</button>
+            </div>
+          </li>
+
+          <li class="product-card">
+            <a href="#product-green-tea" class="product-card__image-link" aria-label="View Loose Leaf Green Tea">
+              <img
+                src="assets/images/product-green-tea.webp"
+                alt="Tin of Loose Leaf Green Tea — smooth and grassy"
+                class="product-card__image"
+                width="320"
+                height="280"
+                loading="lazy"
+                decoding="async"
+              />
+            </a>
+            <div class="product-card__body">
+              <span class="product-card__badge pill">Drinks</span>
+              <h3 class="product-card__name">Loose Leaf Green Tea</h3>
+              <p class="product-card__description">Smooth, grassy, no bitterness</p>
+              <div class="product-card__meta">
+                <span class="product-card__rating" aria-label="Rated 4.6 out of 5">4.6 ★</span>
+                <span class="product-card__price">£5.25</span>
+              </div>
+              <button class="btn btn--primary product-card__cta" type="button">Add to Cart</button>
+            </div>
+          </li>
+
+        </ul>
+      </div>
+    </section>
+
+    <!-- ========== 4. WHY THE GOOD PANTRY ========== -->
+    <section class="why-us" aria-labelledby="why-us-heading">
+      <div class="container">
+        <p class="eyebrow">Why Us</p>
+        <h2 class="why-us__heading" id="why-us-heading">The way we think about food</h2>
+        <ul class="benefits-grid" role="list">
+
+          <li class="benefit-card">
+            <img
+              src="assets/icons/icon-leaf.svg"
+              alt=""
+              class="benefit-card__icon"
+              aria-hidden="true"
+              width="32"
+              height="32"
+            />
+            <h3 class="benefit-card__title">Simple ingredients</h3>
+            <p class="benefit-card__body">We read every label. If we wouldn't buy it ourselves, it doesn't make the shelf.</p>
+          </li>
+
+          <li class="benefit-card">
+            <img
+              src="assets/icons/icon-box.svg"
+              alt=""
+              class="benefit-card__icon"
+              aria-hidden="true"
+              width="32"
+              height="32"
+            />
+            <h3 class="benefit-card__title">Honest portions</h3>
+            <p class="benefit-card__body">Fair sizes, fair prices. No inflated packaging or shrinkflation here.</p>
+          </li>
+
+          <li class="benefit-card">
+            <img
+              src="assets/icons/icon-truck.svg"
+              alt=""
+              class="benefit-card__icon"
+              aria-hidden="true"
+              width="32"
+              height="32"
+            />
+            <h3 class="benefit-card__title">Delivered with care</h3>
+            <p class="benefit-card__body">Orders packed carefully and shipped fast — usually with you in 2–3 days.</p>
+          </li>
+
+        </ul>
+      </div>
+    </section>
+
+    <!-- ========== 5. FEATURED COLLECTION ========== -->
+    <section class="featured-collection" id="breakfast-edit" aria-labelledby="featured-collection-heading">
+      <div class="container featured-collection__inner">
+
+        <div class="featured-collection__editorial">
+          <p class="eyebrow">Right Now</p>
+          <h2 class="featured-collection__heading" id="featured-collection-heading">The Weekday Breakfast Edit</h2>
+          <p class="featured-collection__description">A small, considered selection for easier mornings. Grab one or pick the lot.</p>
+          <a href="#breakfast-edit" class="btn btn--primary featured-collection__cta">Shop the Breakfast Edit</a>
+        </div>
+
+        <ul class="featured-collection__list" role="list">
+
+          <li class="featured-item">
+            <img
+              src="assets/images/product-porridge-oats.webp"
+              alt="Bag of Jumbo Porridge Oats"
+              class="featured-item__image"
+              width="200"
+              height="200"
+              loading="lazy"
+              decoding="async"
+            />
+            <div class="featured-item__details">
+              <span class="featured-item__badge pill">Breakfast</span>
+              <h3 class="featured-item__name">Jumbo Porridge Oats</h3>
+              <p class="featured-item__price">£2.95</p>
+            </div>
+          </li>
+
+          <li class="featured-item">
+            <img
+              src="assets/images/product-chia-jam.webp"
+              alt="Jar of Chia and Berry Jam"
+              class="featured-item__image"
+              width="200"
+              height="200"
+              loading="lazy"
+              decoding="async"
+            />
+            <div class="featured-item__details">
+              <span class="featured-item__badge pill">Breakfast</span>
+              <h3 class="featured-item__name">Chia &amp; Berry Jam</h3>
+              <p class="featured-item__price">£4.25</p>
+            </div>
+          </li>
+
+          <li class="featured-item">
+            <img
+              src="assets/images/product-almond-granola.webp"
+              alt="Bag of Almond Granola"
+              class="featured-item__image"
+              width="200"
+              height="200"
+              loading="lazy"
+              decoding="async"
+            />
+            <div class="featured-item__details">
+              <span class="featured-item__badge pill">Breakfast</span>
+              <h3 class="featured-item__name">Almond Granola</h3>
+              <p class="featured-item__price">£5.50</p>
+            </div>
+          </li>
+
+          <li class="featured-item">
+            <img
+              src="assets/images/product-oat-milk.webp"
+              alt="Six-pack of Oat Milk cartons"
+              class="featured-item__image"
+              width="200"
+              height="200"
+              loading="lazy"
+              decoding="async"
+            />
+            <div class="featured-item__details">
+              <span class="featured-item__badge pill">Drinks</span>
+              <h3 class="featured-item__name">Oat Milk (6-pack)</h3>
+              <p class="featured-item__price">£7.80</p>
+            </div>
+          </li>
+
+        </ul>
+
+      </div>
+    </section>
+
+    <!-- ========== 6. OUR STORY ========== -->
+    <section class="our-story" id="about" aria-labelledby="our-story-heading">
+      <div class="container our-story__inner">
+
+        <div class="our-story__content">
+          <p class="eyebrow">Who We Are</p>
+          <h2 class="our-story__heading" id="our-story-heading">Started in a small kitchen</h2>
+          <p class="our-story__body">The Good Pantry grew out of frustration with long ingredient lists and hard-to-find staples. We're a small team that sources things we genuinely eat — kept simple, priced fairly, and easy to reorder whenever you run out.</p>
+          <a href="#about" class="our-story__link">Learn more about us →</a>
+        </div>
+
+        <div class="our-story__visual">
+          <img
+            src="assets/images/about-kitchen.png"
+            alt="The Good Pantry team packing orders in a small kitchen"
+            class="our-story__image"
+            width="480"
+            height="400"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========== 7. NEWSLETTER ========== -->
+    <section class="newsletter" aria-labelledby="newsletter-heading">
+      <div class="container newsletter__inner">
+        <h2 class="newsletter__heading" id="newsletter-heading">Good things in your inbox</h2>
+        <p class="newsletter__subheading">New arrivals, seasonal picks, and the occasional recipe. No noise.</p>
+        <form class="newsletter__form" action="/subscribe" method="post">
+          <label for="newsletter-email" class="newsletter__label">Email address</label>
+          <div class="newsletter__form-row">
+            <input
+              type="email"
+              id="newsletter-email"
+              name="email"
+              class="newsletter__input"
+              placeholder="Your email address"
+              autocomplete="email"
+              required
+            />
+            <button type="submit" class="btn btn--primary newsletter__submit">Subscribe</button>
+          </div>
+          <p class="newsletter__fine-print">No spam. Unsubscribe any time.</p>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="site-footer" id="contact">
+    <div class="container site-footer__inner">
+
+      <div class="site-footer__brand">
+        <span class="site-footer__logo">The Good Pantry</span>
+        <p class="site-footer__tagline">Real food, simply sourced.</p>
+      </div>
+
+      <nav class="site-footer__nav" aria-label="Footer navigation">
+
+        <div class="site-footer__col">
+          <h2 class="site-footer__col-heading">Shop</h2>
+          <ul role="list">
+            <li><a href="#breakfast" class="site-footer__link">Breakfast</a></li>
+            <li><a href="#snacks" class="site-footer__link">Snacks</a></li>
+            <li><a href="#pantry" class="site-footer__link">Pantry</a></li>
+            <li><a href="#drinks" class="site-footer__link">Drinks</a></li>
+          </ul>
+        </div>
+
+        <div class="site-footer__col">
+          <h2 class="site-footer__col-heading">Help</h2>
+          <ul role="list">
+            <li><a href="#delivery" class="site-footer__link">Delivery &amp; Returns</a></li>
+            <li><a href="#faq" class="site-footer__link">FAQ</a></li>
+            <li><a href="#contact" class="site-footer__link">Contact Us</a></li>
+          </ul>
+        </div>
+
+        <div class="site-footer__col">
+          <h2 class="site-footer__col-heading">Company</h2>
+          <ul role="list">
+            <li><a href="#about" class="site-footer__link">About</a></li>
+            <li><a href="#recipes" class="site-footer__link">Recipes</a></li>
+            <li><a href="#stockists" class="site-footer__link">Stockists</a></li>
+          </ul>
+        </div>
+
+      </nav>
+
+    </div>
+
+    <div class="site-footer__bottom">
+      <div class="container">
+        <p class="site-footer__legal">
+          &copy; 2026 The Good Pantry &middot;
+          <a href="#privacy" class="site-footer__legal-link">Privacy Policy</a> &middot;
+          <a href="#terms" class="site-footer__legal-link">Terms of Use</a>
+        </p>
+      </div>
+    </div>
+
+  </footer>
+
+</body>
+</html>
