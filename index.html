@@ -8,27 +8,64 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300&family=Inter:wght@300;400;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
 </head>
 <body>
 
   <!-- ========== HEADER ========== -->
   <header class="site-header">
-    <div class="container site-header__inner">
-      <a href="/" class="site-header__logo" aria-label="The Good Pantry — home">
-        The Good Pantry
-      </a>
-      <nav class="site-nav" aria-label="Main navigation">
-        <ul class="site-nav__list" role="list">
-          <li><a href="#shop" class="site-nav__link">Shop</a></li>
-          <li><a href="#about" class="site-nav__link">About</a></li>
-          <li><a href="#recipes" class="site-nav__link">Recipes</a></li>
-          <li><a href="#contact" class="site-nav__link">Contact</a></li>
-        </ul>
-      </nav>
-      <a href="#shop" class="btn btn--primary site-header__cta">Shop Now</a>
-    </div>
-  </header>
+  <div class="container site-header__inner">
+
+    <a
+      href="/"
+      class="site-header__logo"
+      aria-label="The Good Pantry — home"
+    >
+      The Good Pantry
+    </a>
+
+    <button
+      class="site-nav__toggle"
+      type="button"
+      aria-label="Open navigation menu"
+      aria-expanded="false"
+      aria-controls="main-navigation"
+    >
+      <span class="site-nav__toggle-line"></span>
+      <span class="site-nav__toggle-line"></span>
+      <span class="site-nav__toggle-line"></span>
+    </button>
+
+    <nav
+      class="site-nav"
+      id="main-navigation"
+      aria-label="Main navigation"
+    >
+      <ul class="site-nav__list">
+        <li>
+          <a href="#shop" class="site-nav__link">Shop</a>
+        </li>
+
+        <li>
+          <a href="#about" class="site-nav__link">About</a>
+        </li>
+
+        <li>
+          <a href="#recipes" class="site-nav__link">Recipes</a>
+        </li>
+
+        <li>
+          <a href="#contact" class="site-nav__link">Contact</a>
+        </li>
+      </ul>
+    </nav>
+
+    <a href="#shop" class="btn btn--primary site-header__cta">
+      Shop Now
+    </a>
+
+  </div>
+</header>
 
   <main>
 
@@ -133,8 +170,13 @@
     <!-- ========== 3. BEST SELLERS ========== -->
     <section class="best-sellers" id="best-sellers" aria-labelledby="best-sellers-heading">
       <div class="container">
-        <p class="eyebrow">Customer Favourites</p>
-        <h2 class="best-sellers__heading" id="best-sellers-heading">What people keep coming back for</h2>
+        <div class="best-sellers__header">
+          <div>
+            <p class="eyebrow">Customer Favourites</p>
+            <h2 class="best-sellers__heading" id="best-sellers-heading">What people keep coming back for</h2>
+          </div>
+          <a href="#shop" class="best-sellers__view-all">Browse all products →</a>
+        </div>
         <ul class="product-grid" role="list">
 
           <li class="product-card">
@@ -373,7 +415,94 @@
       </div>
     </section>
 
-    <!-- ========== 6. OUR STORY ========== -->
+    <!-- ========== 6. RECIPES ========== -->
+    <section class="recipes" id="recipes" aria-labelledby="recipes-heading">
+      <div class="container">
+        <header class="recipes__header">
+          <div class="recipes__header-text">
+            <p class="eyebrow">From Our Kitchen</p>
+            <h2 class="recipes__heading" id="recipes-heading">Simple recipes, honest ingredients.</h2>
+            <p class="recipes__subheading">A few ideas for putting what's in your pantry to good use.</p>
+          </div>
+          <a href="#recipes" class="btn btn--ghost recipes__view-all">View all recipes →</a>
+        </header>
+
+        <ul class="recipes__grid" role="list">
+
+          <li class="recipe-card">
+            <a href="#recipe-overnight-oats" class="recipe-card__link" aria-label="Read recipe: Five-minute overnight oats">
+              <div class="recipe-card__image-wrap">
+                <img
+                  src="assets/images/product-oat-clusters.webp"
+                  alt="Jar of overnight oats topped with granola clusters and berries"
+                  class="recipe-card__image"
+                  width="400"
+                  height="300"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <span class="recipe-card__time" aria-label="Preparation time: 5 minutes">5 min</span>
+              </div>
+              <div class="recipe-card__body">
+                <span class="recipe-card__tag pill">Breakfast</span>
+                <h3 class="recipe-card__title">Five-minute overnight oats</h3>
+                <p class="recipe-card__description">Rolled oats, oat milk and a spoonful of chia jam — left overnight to do the work. No cooking required.</p>
+                <span class="recipe-card__products-label">Uses: Jumbo Porridge Oats · Oat Milk · Chia &amp; Berry Jam</span>
+              </div>
+            </a>
+          </li>
+
+          <li class="recipe-card">
+            <a href="#recipe-granola-bowl" class="recipe-card__link" aria-label="Read recipe: Granola breakfast bowl">
+              <div class="recipe-card__image-wrap">
+                <img
+                  src="assets/images/product-almond-granola.webp"
+                  alt="Bowl of almond granola with sliced banana and a drizzle of nut butter"
+                  class="recipe-card__image"
+                  width="400"
+                  height="300"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <span class="recipe-card__time" aria-label="Preparation time: 10 minutes">10 min</span>
+              </div>
+              <div class="recipe-card__body">
+                <span class="recipe-card__tag pill">Breakfast</span>
+                <h3 class="recipe-card__title">Granola bowl with nut butter drizzle</h3>
+                <p class="recipe-card__description">Almond granola, sliced banana, a pour of cold oat milk and a generous spoonful of mixed nut butter on top.</p>
+                <span class="recipe-card__products-label">Uses: Almond Granola · Mixed Nut Butter · Oat Milk</span>
+              </div>
+            </a>
+          </li>
+
+          <li class="recipe-card">
+            <a href="#recipe-olive-oil-dressing" class="recipe-card__link" aria-label="Read recipe: Quick olive oil vinaigrette">
+              <div class="recipe-card__image-wrap">
+                <img
+                  src="assets/images/product-olive-oil.webp"
+                  alt="Small glass jar of olive oil vinaigrette beside a salad"
+                  class="recipe-card__image"
+                  width="400"
+                  height="300"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <span class="recipe-card__time" aria-label="Preparation time: 3 minutes">3 min</span>
+              </div>
+              <div class="recipe-card__body">
+                <span class="recipe-card__tag pill">Pantry</span>
+                <h3 class="recipe-card__title">Quick olive oil vinaigrette</h3>
+                <p class="recipe-card__description">Cold-pressed olive oil, a little apple cider vinegar, dijon mustard and a pinch of sea salt. Shake and done.</p>
+                <span class="recipe-card__products-label">Uses: Cold-Pressed Olive Oil</span>
+              </div>
+            </a>
+          </li>
+
+        </ul>
+      </div>
+    </section>
+
+    <!-- ========== 7. OUR STORY ========== -->
     <section class="our-story" id="about" aria-labelledby="our-story-heading">
       <div class="container our-story__inner">
 

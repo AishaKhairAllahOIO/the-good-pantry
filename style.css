@@ -257,6 +257,10 @@ button {
   outline-offset: 4px;
   border-radius: var(--radius-nav);
 }
+/* Mobile menu toggle — hidden on desktop */
+.site-nav__toggle {
+  display: none;
+}
 
 /* Navigation */
 .site-nav__list {
@@ -1183,21 +1187,90 @@ iframe {
     --container-x:   var(--spacing-18);
   }
 
-  /* ---- Header: hide nav links, keep logo + CTA ---- */
-  /* No JS hamburger — nav links remain in DOM and are accessible via keyboard/screen reader.
-     On small screens we hide the textual nav and rely on the Shop Now CTA + in-page anchors.
-     A skip-link or landmark navigation remains fully operable.                              */
-  .site-nav {
-    display: none;
-  }
+/* ---- Header: mobile navigation ---- */
 
-  .site-header__inner {
-    height: 56px;
-  }
+.site-header__inner {
+  position: relative;
+  height: 56px;
+}
 
-  .site-header__logo {
-    font-size: var(--text-subheading);
-  }
+.site-header__logo {
+  font-size: var(--text-subheading);
+}
+
+/* Show hamburger */
+.site-nav__toggle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+
+  width: 44px;
+  height: 44px;
+
+  padding: 10px;
+  margin-left: auto;
+
+  z-index: 2;
+}
+
+.site-nav__toggle-line {
+  display: block;
+  width: 100%;
+  height: 2px;
+
+  background-color: var(--color-forest-ink);
+
+  transition:
+    transform 0.25s ease,
+    opacity 0.25s ease;
+}
+
+/* Mobile navigation */
+.site-nav {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+
+  background-color: var(--surface-page);
+  border-bottom: 1px solid var(--color-border-mist);
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease,
+    visibility 0.25s;
+}
+
+.site-nav__list {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+
+  padding: var(--spacing-14) var(--container-x)
+           var(--spacing-21);
+}
+
+.site-nav__link {
+  display: block;
+  padding: var(--spacing-14) 0;
+}
+
+/* Open state */
+.site-nav.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Hide desktop CTA on mobile */
+.site-header__cta {
+  display: none;
+}
 
   /* ---- Hero: stack content above image ---- */
   .hero {
@@ -1399,4 +1472,1200 @@ iframe {
     grid-template-columns: 1fr;
   }
 
+}
+/* ==========================================================================
+   19. MOTION TOKENS
+   ========================================================================== */
+
+:root {
+  /* Durations */
+  --motion-fast:    180ms;
+  --motion-base:    320ms;
+  --motion-slow:    560ms;
+  --motion-slower:  820ms;
+
+  /* Easing curves */
+  --ease-out-soft:  cubic-bezier(0.22, 1, 0.36, 1);   /* elegant deceleration */
+  --ease-out-expo:  cubic-bezier(0.16, 1, 0.3, 1);    /* snappy, editorial   */
+  --ease-in-out:    cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* Reveal travel distance */
+  --reveal-shift:   18px;
+}
+
+
+/* ==========================================================================
+   20. SCROLL BEHAVIOR — anchor offset for sticky header
+   ========================================================================== */
+
+html {
+  scroll-padding-top: 88px;
+}
+
+
+/* ==========================================================================
+   21. SCROLL-REVEAL BASE
+   --------------------------------------------------------------------------
+   Elements with [data-reveal] fade & rise in when they enter the viewport.
+   Using `animation-timeline: view()` where supported (Chrome/Edge 115+).
+   Fallback: they simply appear (no motion) on unsupported browsers, which is
+   perfectly acceptable — no JS required.
+   ========================================================================== */
+
+@keyframes reveal-rise {
+  from {
+    opacity: 0;
+    transform: translateY(var(--reveal-shift));
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes reveal-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Apply reveal to section-level blocks by default.
+   Everything is opt-in via the class — nothing breaks if unsupported. */
+.reveal,
+.categories__heading,
+.categories__list,
+.best-sellers__heading,
+.product-grid,
+.why-us__heading,
+.benefits-grid,
+.featured-collection__editorial,
+.featured-collection__list,
+.our-story__content,
+.our-story__visual,
+.newsletter__inner {
+  animation: reveal-rise var(--motion-slower) var(--ease-out-soft) both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 55%;
+}
+
+/* Stagger children of grids so they cascade in */
+.product-grid > *,
+.categories__list > *,
+.benefits-grid > *,
+.featured-collection__list > * {
+  animation: reveal-rise var(--motion-slower) var(--ease-out-soft) both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 60%;
+}
+
+/* Featured item — subtle horizontal entrance */
+.featured-item {
+  animation: reveal-rise 700ms var(--ease-out-soft) both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 70%;
+}
+
+
+/* ==========================================================================
+   22. HERO — CHOREOGRAPHED ENTRANCE
+   --------------------------------------------------------------------------
+   Runs once, on page load. Staggered sequence reads like a well-set page.
+   ========================================================================== */
+
+@keyframes hero-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hero-visual-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.hero__content .eyebrow {
+  animation: hero-fade-up 700ms var(--ease-out-expo) 80ms both;
+}
+
+.hero__heading {
+  animation: hero-fade-up 900ms var(--ease-out-expo) 180ms both;
+}
+
+.hero__body {
+  animation: hero-fade-up 900ms var(--ease-out-expo) 320ms both;
+}
+
+.hero__actions {
+  animation: hero-fade-up 900ms var(--ease-out-expo) 460ms both;
+}
+
+.hero__visual {
+  animation: hero-visual-in 1100ms var(--ease-out-expo) 260ms both;
+}
+
+/* Gentle ambient float on the hero image card */
+@keyframes hero-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-6px); }
+}
+
+.hero__image-card {
+  animation: hero-float 7s ease-in-out 1.4s infinite;
+  will-change: transform;
+}
+
+
+/* ==========================================================================
+   23. HEADER — shrink & soften on scroll
+   ========================================================================== */
+
+@keyframes header-shrink {
+  from {
+    height: 64px;
+    background-color: var(--surface-page);
+    box-shadow: 0 0 0 rgba(15, 62, 23, 0);
+  }
+  to {
+    height: 56px;
+    background-color: var(--surface-page);
+    box-shadow: 0 6px 20px -12px rgba(15, 62, 23, 0.18);
+  }
+}
+
+.site-header__inner {
+  animation: header-shrink linear both;
+  animation-timeline: scroll(root);
+  animation-range: 0 200px;
+}
+
+/* Logo — subtle letter-spacing breath on hover */
+.site-header__logo {
+  transition: letter-spacing var(--motion-base) var(--ease-out-soft),
+              color var(--motion-fast) ease;
+}
+.site-header__logo:hover {
+  letter-spacing: 0.01em;
+}
+
+
+/* ==========================================================================
+   24. NAV LINK — animated underline
+   ========================================================================== */
+
+.site-nav__link {
+  position: relative;
+}
+
+.site-nav__link::after {
+  content: "";
+  position: absolute;
+  left: var(--spacing-9);
+  right: var(--spacing-9);
+  bottom: 4px;
+  height: 1px;
+  background-color: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--motion-base) var(--ease-out-expo);
+}
+
+.site-nav__link:hover::after,
+.site-nav__link:focus-visible::after {
+  transform: scaleX(1);
+}
+
+
+/* ==========================================================================
+   25. BUTTONS — lift, glow, arrow slide
+   ========================================================================== */
+
+.btn {
+  position: relative;
+  overflow: hidden;
+  transition:
+    background-color var(--motion-fast) ease,
+    color var(--motion-fast) ease,
+    transform var(--motion-base) var(--ease-out-expo),
+    box-shadow var(--motion-base) var(--ease-out-soft);
+}
+
+.btn--primary {
+  box-shadow: 0 0 0 rgba(15, 62, 23, 0);
+}
+
+.btn--primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px -14px rgba(15, 62, 23, 0.55);
+}
+
+.btn--primary:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 12px -8px rgba(15, 62, 23, 0.5);
+}
+
+/* Soft sheen sweep on hover */
+.btn--primary::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.22) 50%,
+    transparent 80%
+  );
+  transform: translateX(-120%);
+  transition: transform 720ms var(--ease-out-expo);
+  pointer-events: none;
+}
+
+.btn--primary:hover::before {
+  transform: translateX(120%);
+}
+
+
+/* ==========================================================================
+   26. TEXT LINKS — underline reveal (secondary + story)
+   ========================================================================== */
+
+.hero__secondary-link,
+.our-story__link {
+  position: relative;
+  transition: color var(--motion-fast) ease, opacity var(--motion-fast) ease;
+}
+
+.hero__secondary-link::after,
+.our-story__link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 100%;
+  height: 1px;
+  background-color: currentColor;
+  transform: scaleX(1);
+  transform-origin: right center;
+  transition: transform var(--motion-base) var(--ease-out-expo);
+}
+
+.hero__secondary-link:hover::after,
+.our-story__link:hover::after {
+  transform: scaleX(0);
+}
+
+/* Footer links — soft color slide */
+.site-footer__link {
+  position: relative;
+  transition: color var(--motion-fast) ease,
+              transform var(--motion-base) var(--ease-out-expo);
+}
+.site-footer__link:hover {
+  transform: translateX(3px);
+}
+
+
+/* ==========================================================================
+   27. CATEGORY CARDS — hover lift + image zoom
+   ========================================================================== */
+
+.category-item {
+  transition:
+    background-color var(--motion-base) var(--ease-out-soft),
+    transform var(--motion-base) var(--ease-out-expo),
+    box-shadow var(--motion-base) var(--ease-out-soft);
+  will-change: transform;
+}
+
+.category-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 34px -22px rgba(15, 62, 23, 0.28);
+}
+
+.category-item__image {
+  transition: transform 700ms var(--ease-out-expo);
+}
+
+.category-item:hover .category-item__image {
+  transform: scale(1.05);
+}
+
+.category-item__name {
+  transition: color var(--motion-fast) ease;
+}
+
+
+/* ==========================================================================
+   28. PRODUCT CARDS — lift, zoom, price emphasis
+   ========================================================================== */
+
+.product-card {
+  transition:
+    transform var(--motion-base) var(--ease-out-expo),
+    box-shadow var(--motion-base) var(--ease-out-soft),
+    border-color var(--motion-fast) ease;
+  will-change: transform;
+}
+
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 22px 40px -26px rgba(15, 62, 23, 0.3);
+  border-color: var(--color-mint-veil);
+}
+
+.product-card__image {
+  transition: transform 700ms var(--ease-out-expo);
+}
+
+.product-card__price {
+  transition: transform var(--motion-base) var(--ease-out-expo),
+              color var(--motion-fast) ease;
+}
+
+.product-card:hover .product-card__price {
+  transform: translateY(-1px);
+}
+
+/* Add-to-cart — slight scale on hover */
+.product-card__cta {
+  transition:
+    background-color var(--motion-fast) ease,
+    transform var(--motion-base) var(--ease-out-expo),
+    box-shadow var(--motion-base) var(--ease-out-soft);
+}
+
+.product-card__cta:hover {
+  transform: translateY(-1px) scale(1.01);
+}
+
+.product-card__cta:active {
+  transform: translateY(0) scale(0.99);
+}
+
+
+/* ==========================================================================
+   29. PILL BADGE — soft glow pulse on card hover
+   ========================================================================== */
+
+.pill {
+  transition:
+    background-color var(--motion-fast) ease,
+    color var(--motion-fast) ease,
+    box-shadow var(--motion-base) var(--ease-out-soft);
+}
+
+.product-card:hover .product-card__badge,
+.featured-item:hover .featured-item__badge {
+  background-color: var(--color-keylime-wash);
+  box-shadow: 0 0 0 3px rgba(177, 219, 184, 0.35);
+}
+
+
+/* ==========================================================================
+   30. BENEFIT CARDS — icon lift + card lift
+   ========================================================================== */
+
+.benefit-card {
+  transition:
+    transform var(--motion-base) var(--ease-out-expo),
+    background-color var(--motion-base) var(--ease-out-soft),
+    box-shadow var(--motion-base) var(--ease-out-soft);
+  will-change: transform;
+}
+
+.benefit-card:hover {
+  transform: translateY(-4px);
+  background-color: var(--surface-mid);
+  box-shadow: 0 18px 34px -24px rgba(15, 62, 23, 0.28);
+}
+
+.benefit-card__icon {
+  transition: transform var(--motion-base) var(--ease-out-expo);
+}
+
+.benefit-card:hover .benefit-card__icon {
+  transform: translateY(-3px) rotate(-4deg);
+}
+
+
+/* ==========================================================================
+   31. FEATURED ITEMS — row hover highlight
+   ========================================================================== */
+
+.featured-item {
+  transition: background-color var(--motion-base) var(--ease-out-soft),
+              padding-inline var(--motion-base) var(--ease-out-expo);
+}
+
+.featured-item:hover {
+  background-color: rgba(255, 255, 255, 0.55);
+  padding-inline: var(--spacing-21);
+}
+
+.featured-item__image {
+  transition: transform 700ms var(--ease-out-expo),
+              box-shadow var(--motion-base) var(--ease-out-soft);
+}
+
+.featured-item:hover .featured-item__image {
+  transform: scale(1.04) rotate(-1deg);
+  box-shadow: 0 14px 26px -18px rgba(15, 62, 23, 0.35);
+}
+
+
+/* ==========================================================================
+   32. OUR STORY — image gentle parallax-ish drift
+   ========================================================================== */
+
+.our-story__image {
+  transition: transform 900ms var(--ease-out-expo);
+}
+
+.our-story__visual:hover .our-story__image {
+  transform: scale(1.03);
+}
+
+
+/* ==========================================================================
+   33. NEWSLETTER — input focus glow & form lift
+   ========================================================================== */
+
+.newsletter__form-row {
+  transition: box-shadow var(--motion-base) var(--ease-out-soft),
+              transform var(--motion-base) var(--ease-out-expo);
+}
+
+.newsletter__form-row:focus-within {
+  box-shadow: 0 0 0 4px rgba(177, 219, 184, 0.45);
+  transform: translateY(-1px);
+}
+
+.newsletter__submit {
+  transition:
+    background-color var(--motion-fast) ease,
+    transform var(--motion-base) var(--ease-out-expo);
+}
+
+.newsletter__submit:hover {
+  transform: translateX(1px);
+}
+
+
+/* ==========================================================================
+   34. STAGGER HELPERS — optional class utilities
+   ========================================================================== */
+
+.stagger-1 { animation-delay: 60ms;  }
+.stagger-2 { animation-delay: 140ms; }
+.stagger-3 { animation-delay: 220ms; }
+.stagger-4 { animation-delay: 300ms; }
+
+
+/* ==========================================================================
+   35. ACCESSIBILITY — Respect reduced-motion preference
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .hero__image-card {
+    animation: none !important;
+  }
+
+  .btn--primary::before {
+    display: none;
+  }
+}
+
+
+/* ==========================================================================
+   36. TYPOGRAPHY REFINEMENTS
+   --------------------------------------------------------------------------
+   Improved contrast, rhythm, and hierarchy across all sections.
+   Key changes:
+   - Section headings use a slightly warmer weight (400 on key headings)
+   - Body copy bumped to 15px (from 14px) for comfort
+   - Subheadings tightened from 18px to a clamp for better mobile feel
+   - Eyebrow updated to 11px with tighter spacing (more refined)
+   - Heading size tokens updated via override — desktop sizes preserved
+   ========================================================================== */
+
+/* ---- Global body copy — slightly more comfortable ---- */
+body {
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* ---- Eyebrow — refine to 11px, stronger tracking ---- */
+.eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  opacity: 0.75;
+}
+
+/* ---- Section headings — mix of 300 and 400 weight for rhythm ---- */
+/* Primary h2s: keep 300 for editorial calm */
+.categories__heading,
+.why-us__heading,
+.our-story__heading,
+.newsletter__heading,
+.recipes__heading {
+  font-weight: 300;
+}
+
+/* Best Sellers heading — slightly stronger (4-col grid anchor needs weight) */
+.best-sellers__heading {
+  font-weight: 300;
+  font-size: clamp(1.85rem, 3.2vw + 0.4rem, 2.75rem);
+  max-width: 20ch;
+}
+
+/* Featured collection — keeps 300, largest heading on page */
+.featured-collection__heading {
+  font-weight: 300;
+  line-height: 1.1;
+}
+
+/* ---- Product card name — use 400 weight for better scannability ---- */
+.product-card__name {
+  font-weight: 400;
+  font-size: 1.25rem;    /* 20px — up from 23px token to avoid oversizing in grid */
+  letter-spacing: -0.015em;
+  line-height: 1.3;
+}
+
+/* ---- Product card description — slightly lighter treatment ---- */
+.product-card__description {
+  font-size: 13px;
+  line-height: 1.55;
+  opacity: 0.8;
+}
+
+/* ---- Price — larger, more prominent ---- */
+.product-card__price {
+  font-size: 1.25rem;
+  letter-spacing: -0.01em;
+}
+
+/* ---- Rating — a touch larger and warmer ---- */
+.product-card__rating {
+  font-size: 12px;
+  color: var(--color-forest-ink);
+  opacity: 0.7;
+}
+
+/* ---- Hero heading fluid — wider min for smaller screens ---- */
+.hero__heading {
+  font-size: clamp(2.6rem, 5.5vw + 0.4rem, 4.625rem); /* 42px → 74px */
+  line-height: 1.02;
+}
+
+/* ---- Hero body copy — better readability ---- */
+.hero__body {
+  font-size: clamp(1rem, 1.5vw + 0.4rem, 1.125rem);
+  line-height: 1.65;
+  opacity: 0.85;
+  max-width: 42ch;
+}
+
+/* ---- Section headings (shared) — fluid ---- */
+.categories__heading,
+.why-us__heading,
+.our-story__heading,
+.newsletter__heading,
+.recipes__heading {
+  font-size: clamp(1.85rem, 3vw + 0.5rem, 2.5rem); /* 30px → 40px */
+}
+
+/* ---- Benefit card titles — weight 400 for authority ---- */
+.benefit-card__title {
+  font-weight: 400;
+  font-size: 1.2rem;
+  letter-spacing: -0.01em;
+}
+
+/* ---- Benefit card body — comfortable body size ---- */
+.benefit-card__body {
+  font-size: 14px;
+  line-height: 1.6;
+  opacity: 0.8;
+}
+
+/* ---- Our Story body copy — proper measure for reading ---- */
+.our-story__body {
+  max-width: 44ch;
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+/* ---- Featured item name — weight 400 for list readability ---- */
+.featured-item__name {
+  font-weight: 400;
+  font-size: 1.1rem;
+}
+
+/* ---- Category name — weight 400 so it scans clearly ---- */
+.category-item__name {
+  font-weight: 400;
+  font-size: 1.3rem;
+}
+
+/* ---- Newsletter heading — tighten tracking at this size ---- */
+.newsletter__heading {
+  letter-spacing: -0.03em;
+}
+
+/* ---- Newsletter subheading ---- */
+.newsletter__subheading {
+  font-size: 1rem;
+  opacity: 0.75;
+  margin-bottom: var(--spacing-35);
+}
+
+
+/* ==========================================================================
+   37. RECIPES SECTION
+   ========================================================================== */
+
+.recipes {
+  padding-block: var(--section-gap);
+  background-color: var(--surface-page);
+  border-top: 1px solid var(--color-border-mist);
+}
+
+/* Header row: text left, CTA right */
+.recipes__header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--spacing-28);
+  margin-bottom: var(--spacing-49);
+}
+
+.recipes__header-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.recipes__heading {
+  font-family: var(--font-serif);
+  font-weight: 300;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--color-forest-ink);
+  margin-bottom: var(--spacing-9);
+}
+
+.recipes__subheading {
+  font-size: 14px;
+  color: var(--color-charcoal);
+  opacity: 0.7;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Ghost / outline button */
+.btn--ghost {
+  background-color: transparent;
+  color: var(--color-forest-ink);
+  border: 1.5px solid var(--color-forest-ink);
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.btn--ghost:hover {
+  background-color: var(--color-forest-ink);
+  color: var(--color-cream-paper);
+}
+
+.btn--ghost:focus-visible {
+  outline: 2px solid var(--color-forest-ink);
+  outline-offset: 3px;
+}
+
+/* Intrinsic grid — collapses naturally without manual breakpoints */
+.recipes__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+  gap: var(--spacing-28);
+}
+
+/* Recipe card */
+.recipe-card {
+  background-color: var(--color-cream-paper);
+  border: 1px solid var(--color-border-mist);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition:
+    transform var(--motion-base) var(--ease-out-expo),
+    box-shadow var(--motion-base) var(--ease-out-soft),
+    border-color var(--motion-fast) ease;
+  will-change: transform;
+}
+
+.recipe-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px -24px rgba(15, 62, 23, 0.28);
+  border-color: var(--color-sage-mist);
+}
+
+.recipe-card__link {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+}
+
+.recipe-card__link:focus-visible {
+  outline: 2px solid var(--color-forest-ink);
+  outline-offset: 2px;
+  border-radius: var(--radius-card);
+}
+
+/* Image wrapper — holds image + time badge */
+.recipe-card__image-wrap {
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.recipe-card__image {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+  transition: transform 700ms var(--ease-out-expo);
+}
+
+.recipe-card:hover .recipe-card__image {
+  transform: scale(1.05);
+}
+
+/* Time badge — overlaid on the image */
+.recipe-card__time {
+  position: absolute;
+  top: var(--spacing-14);
+  right: var(--spacing-14);
+  background-color: rgba(255, 254, 252, 0.92);
+  color: var(--color-forest-ink);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  padding: 6px 10px;
+  border-radius: var(--radius-badge);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+/* Body */
+.recipe-card__body {
+  padding: var(--spacing-21) var(--spacing-28) var(--spacing-28);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-9);
+  flex: 1;
+}
+
+.recipe-card__tag {
+  align-self: flex-start;
+  margin-bottom: var(--spacing-4);
+}
+
+.recipe-card__title {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 400;
+  line-height: 1.3;
+  color: var(--color-forest-ink);
+  letter-spacing: -0.015em;
+  margin: 0;
+  flex: 1;
+}
+
+.recipe-card:hover .recipe-card__title {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(15, 62, 23, 0.3);
+}
+
+.recipe-card__description {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--color-charcoal);
+  opacity: 0.78;
+  margin: 0;
+}
+
+/* Products used — small label at bottom of card */
+.recipe-card__products-label {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  color: var(--color-forest-ink);
+  opacity: 0.6;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+  margin-top: auto;
+  padding-top: var(--spacing-14);
+  border-top: 1px solid var(--color-border-mist);
+}
+
+/* Scroll-reveal — recipes cards cascade in */
+.recipes__grid > * {
+  animation: reveal-rise var(--motion-slower) var(--ease-out-soft) both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 60%;
+}
+
+.recipes__header {
+  animation: reveal-rise var(--motion-slower) var(--ease-out-soft) both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 45%;
+}
+
+
+/* ==========================================================================
+   38. RECIPES — RESPONSIVE
+   ========================================================================== */
+
+/* Tablet: header stacks when space is tight */
+@media (max-width: 767px) {
+
+  .recipes__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-21);
+    margin-bottom: var(--spacing-35);
+  }
+
+  .btn--ghost.recipes__view-all {
+    align-self: flex-start;
+  }
+
+  /* Grid collapses to 1 col on small mobile naturally via minmax */
+  /* No explicit override needed — auto-fit handles it */
+
+  .recipe-card__body {
+    padding: var(--spacing-18) var(--spacing-21) var(--spacing-21);
+  }
+
+}
+
+
+/* ==========================================================================
+   39. CUSTOMER FAVOURITES — Improved layout & card aesthetics
+   --------------------------------------------------------------------------
+   Key changes:
+   - Section gets a richer surface treatment (sage-mist with subtle texture)
+   - Grid uses 2+2 layout on desktop via aspect-ratio discipline
+   - First card spans full width as a "hero" product card
+   - Cards have a more deliberate internal hierarchy
+   - Price + CTA row visually separated from content
+   - Image aspect-ratio changed to a taller square feel (1/1 approx)
+   ========================================================================== */
+
+/* Section surface — richer, more editorial */
+.best-sellers {
+  background-color: var(--surface-feature);
+  padding-block: calc(var(--section-gap) * 1.1);
+}
+
+/* Section header row — eyebrow + heading left, "view all" link right */
+.best-sellers__header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--spacing-28);
+  margin-bottom: var(--spacing-56);
+}
+
+.best-sellers__heading {
+  margin-bottom: 0;   /* remove bottom margin now that it lives in a flex row */
+  max-width: 18ch;
+}
+
+.best-sellers__view-all {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-forest-ink);
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 1px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: opacity 0.18s ease;
+  margin-bottom: 4px; /* optical alignment with heading baseline */
+}
+
+.best-sellers__view-all:hover { opacity: 0.6; }
+.best-sellers__view-all:focus-visible {
+  outline: 2px solid var(--color-forest-ink);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Product grid — 4 equal columns on desktop */
+.product-grid {
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-21);
+  align-items: stretch;
+}
+
+/* Product card — taller, richer feel */
+.product-card {
+  border-radius: 18px;          /* softer corners than the base 14px */
+  border: 1px solid rgba(177, 219, 184, 0.5);
+  background-color: var(--color-cream-paper);
+}
+
+/* Image — square crop gives uniform height across the row */
+.product-card__image {
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 14px 14px 0 0;  /* top corners match card */
+}
+
+/* Body — grid layout for deliberate row alignment */
+.product-card__body {
+  display: grid;
+  grid-template-rows: auto auto 1fr auto auto;
+  gap: 0;
+  padding: var(--spacing-18) var(--spacing-21) var(--spacing-21);
+}
+
+.product-card__badge {
+  margin-bottom: var(--spacing-9);
+}
+
+.product-card__name {
+  font-size: 1.1rem;
+  margin-bottom: var(--spacing-7);
+  line-height: 1.25;
+}
+
+.product-card__description {
+  font-size: 12.5px;
+  line-height: 1.5;
+  opacity: 0.72;
+  margin-bottom: var(--spacing-14);
+}
+
+/* Price + rating — horizontal bar */
+.product-card__meta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding-block: var(--spacing-11);
+  border-top: 1px solid var(--color-border-mist);
+  border-bottom: 1px solid var(--color-border-mist);
+  margin-bottom: var(--spacing-14);
+}
+
+.product-card__price {
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--color-forest-ink);
+}
+
+.product-card__rating {
+  font-size: 11.5px;
+  color: var(--color-charcoal);
+  opacity: 0.65;
+  letter-spacing: 0.01em;
+}
+
+/* CTA button — full-width, slightly taller for touch */
+.product-card__cta {
+  width: 100%;
+  justify-content: center;
+  margin-top: 0;
+  padding-block: 12px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+/* Hover state — emphasise border glow */
+.product-card:hover {
+  border-color: var(--color-sage-mist);
+  box-shadow: 0 16px 36px -20px rgba(15, 62, 23, 0.22);
+}
+
+/* ---- Best Sellers: responsive ---- */
+@media (max-width: 1100px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-18);
+  }
+  .best-sellers__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-9);
+    margin-bottom: var(--spacing-42);
+  }
+  .best-sellers__heading { max-width: none; }
+}
+
+@media (max-width: 520px) {
+  .product-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-14);
+  }
+}
+
+
+/* ==========================================================================
+   40. WHY THE GOOD PANTRY — Larger icons, refined card sizing
+   --------------------------------------------------------------------------
+   Key changes:
+   - Icon size: 32px → 52px, inside a tinted circular container
+   - Icon container gives visual weight without extra colour
+   - Card padding increased for breathing room
+   - Title size up, body size up
+   - Subtle left-accent line on hover for editorial feel
+   ========================================================================== */
+
+.why-us {
+  padding-block: calc(var(--section-gap) * 1.1);
+}
+
+/* Benefits grid — 3 columns with larger gap */
+.benefits-grid {
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-28);
+  margin-top: var(--spacing-14);
+}
+
+/* Card */
+.benefit-card {
+  background-color: var(--surface-light);
+  border-radius: 18px;
+  padding: var(--spacing-42) var(--spacing-35);
+  position: relative;
+  border: 1px solid transparent;
+  transition:
+    transform 320ms cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 320ms ease,
+    border-color 200ms ease,
+    box-shadow 320ms ease;
+}
+
+.benefit-card:hover {
+  transform: translateY(-5px);
+  background-color: var(--surface-mid);
+  border-color: rgba(177, 219, 184, 0.6);
+  box-shadow: 0 20px 38px -24px rgba(15, 62, 23, 0.22);
+}
+
+/* Accent left border on hover */
+.benefit-card::before {
+  content: "";
+  position: absolute;
+  top: 18px;
+  bottom: 18px;
+  left: 0;
+  width: 3px;
+  background-color: var(--color-forest-ink);
+  border-radius: 0 3px 3px 0;
+  opacity: 0;
+  transform: scaleY(0.4);
+  transform-origin: center;
+  transition:
+    opacity 280ms ease,
+    transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.benefit-card:hover::before {
+  opacity: 0.7;
+  transform: scaleY(1);
+}
+
+/* Icon container — circular tinted pill */
+.benefit-card__icon-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: rgba(15, 62, 23, 0.07);
+  margin-bottom: var(--spacing-21);
+  transition: background-color 280ms ease, transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
+  flex-shrink: 0;
+}
+
+.benefit-card:hover .benefit-card__icon-wrap {
+  background-color: rgba(15, 62, 23, 0.13);
+  transform: translateY(-3px) rotate(-4deg);
+}
+
+/* The img inside the wrapper — larger */
+.benefit-card__icon {
+  width: 28px;
+  height: 28px;
+  margin-bottom: 0;  /* remove the old margin — spacing handled by wrapper margin */
+  flex-shrink: 0;
+  display: block;
+}
+
+/* Title — larger, bolder */
+.benefit-card__title {
+  font-size: 1.3rem;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: var(--color-forest-ink);
+  line-height: 1.2;
+  margin-bottom: var(--spacing-11);
+}
+
+/* Body — comfortable reading size */
+.benefit-card__body {
+  font-size: 14.5px;
+  line-height: 1.65;
+  opacity: 0.78;
+}
+
+/* ---- Why Us: responsive ---- */
+@media (max-width: 900px) {
+  .benefits-grid {
+    grid-template-columns: repeat(2, 1fr);  /* Snappy 2-col on tablet */
+    gap: var(--spacing-21);
+  }
+  .benefit-card {
+    padding: var(--spacing-28) var(--spacing-28);
+  }
+}
+
+@media (max-width: 520px) {
+  .benefits-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-14);
+  }
+  .benefit-card {
+    padding: var(--spacing-28) var(--spacing-21);
+  }
 }
