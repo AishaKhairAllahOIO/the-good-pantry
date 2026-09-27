@@ -37,7 +37,7 @@
   --weight-semibold:  600;
 
   /* Typography — Scale */
-  --text-caption:     10px;
+  --text-caption:     12px;
   --text-body:        14px;
   --text-subheading:  18px;
   --text-heading-sm:  23px;
@@ -1504,12 +1504,13 @@ html {
 
 
 /* ==========================================================================
-   21. SCROLL-REVEAL BASE
+   21. SCROLL-REVEAL SYSTEM
    --------------------------------------------------------------------------
-   Elements with [data-reveal] fade & rise in when they enter the viewport.
-   Using `animation-timeline: view()` where supported (Chrome/Edge 115+).
-   Fallback: they simply appear (no motion) on unsupported browsers, which is
-   perfectly acceptable — no JS required.
+   Cross-browser IntersectionObserver approach.
+   JS adds [data-revealed] when element enters viewport.
+   Elements start invisible via [data-reveal]; become visible on [data-revealed].
+   Supports: stagger via --reveal-delay CSS custom property set by JS.
+   Hero elements use their own separate entrance (section 22).
    ========================================================================== */
 
 @keyframes reveal-rise {
@@ -1528,40 +1529,54 @@ html {
   to   { opacity: 1; }
 }
 
-/* Apply reveal to section-level blocks by default.
-   Everything is opt-in via the class — nothing breaks if unsupported. */
-.reveal,
-.categories__heading,
-.categories__list,
-.best-sellers__heading,
-.product-grid,
-.why-us__heading,
-.benefits-grid,
-.featured-collection__editorial,
-.featured-collection__list,
-.our-story__content,
-.our-story__visual,
-.newsletter__inner {
-  animation: reveal-rise var(--motion-slower) var(--ease-out-soft) both;
-  animation-timeline: view();
-  animation-range: entry 0% entry 55%;
+@keyframes reveal-scale {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 
-/* Stagger children of grids so they cascade in */
-.product-grid > *,
-.categories__list > *,
-.benefits-grid > *,
-.featured-collection__list > * {
-  animation: reveal-rise var(--motion-slower) var(--ease-out-soft) both;
-  animation-timeline: view();
-  animation-range: entry 0% entry 60%;
+/* Base hidden state — applied by JS before observation starts */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(var(--reveal-shift));
+  transition:
+    opacity var(--motion-slower) var(--ease-out-soft),
+    transform var(--motion-slower) var(--ease-out-soft);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
 }
 
-/* Featured item — subtle horizontal entrance */
-.featured-item {
-  animation: reveal-rise 700ms var(--ease-out-soft) both;
-  animation-timeline: view();
-  animation-range: entry 0% entry 70%;
+[data-reveal="fade"] {
+  transform: none;
+  transition:
+    opacity var(--motion-slower) var(--ease-out-soft);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+[data-reveal="scale"] {
+  transform: scale(0.96) translateY(10px);
+}
+
+/* Revealed state — JS adds this class */
+[data-revealed] {
+  opacity: 1;
+  transform: none;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal],
+  [data-reveal="fade"],
+  [data-reveal="scale"] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
 
 
@@ -1853,7 +1868,7 @@ html {
 
 
 /* ==========================================================================
-   29. PILL BADGE — soft glow pulse on card hover
+   29. PILL BADGE
    ========================================================================== */
 
 .pill {
@@ -1861,12 +1876,6 @@ html {
     background-color var(--motion-fast) ease,
     color var(--motion-fast) ease,
     box-shadow var(--motion-base) var(--ease-out-soft);
-}
-
-.product-card:hover .product-card__badge,
-.featured-item:hover .featured-item__badge {
-  background-color: var(--color-keylime-wash);
-  box-shadow: 0 0 0 3px rgba(177, 219, 184, 0.35);
 }
 
 
@@ -2012,9 +2021,9 @@ body {
   line-height: 1.6;
 }
 
-/* ---- Eyebrow — refine to 11px, stronger tracking ---- */
+/* ---- Eyebrow — refine to 12px, stronger tracking ---- */
 .eyebrow {
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 0.1em;
   font-weight: 600;
   opacity: 0.75;
@@ -2269,7 +2278,7 @@ body {
   background-color: rgba(255, 254, 252, 0.92);
   color: var(--color-forest-ink);
   font-family: var(--font-sans);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.04em;
   line-height: 1;
@@ -2311,7 +2320,7 @@ body {
 }
 
 .recipe-card__description {
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.6;
   color: var(--color-charcoal);
   opacity: 0.78;
@@ -2321,7 +2330,7 @@ body {
 /* Products used — small label at bottom of card */
 .recipe-card__products-label {
   font-family: var(--font-sans);
-  font-size: 11px;
+  font-size: 12px;
   color: var(--color-forest-ink);
   opacity: 0.6;
   line-height: 1.5;
@@ -2331,18 +2340,7 @@ body {
   border-top: 1px solid var(--color-border-mist);
 }
 
-/* Scroll-reveal — recipes cards cascade in */
-.recipes__grid > * {
-  animation: reveal-rise var(--motion-slower) var(--ease-out-soft) both;
-  animation-timeline: view();
-  animation-range: entry 0% entry 60%;
-}
-
-.recipes__header {
-  animation: reveal-rise var(--motion-slower) var(--ease-out-soft) both;
-  animation-timeline: view();
-  animation-range: entry 0% entry 45%;
-}
+/* Scroll-reveal — recipes cards cascade in via JS IntersectionObserver */
 
 
 /* ==========================================================================
@@ -2466,7 +2464,7 @@ body {
 }
 
 .product-card__description {
-  font-size: 12.5px;
+  font-size: 13.5px;
   line-height: 1.5;
   opacity: 0.72;
   margin-bottom: var(--spacing-14);
@@ -2491,7 +2489,7 @@ body {
 }
 
 .product-card__rating {
-  font-size: 11.5px;
+  font-size: 12.5px;
   color: var(--color-charcoal);
   opacity: 0.65;
   letter-spacing: 0.01em;
@@ -2667,5 +2665,207 @@ body {
   }
   .benefit-card {
     padding: var(--spacing-28) var(--spacing-21);
+  }
+}
+
+
+/* ==========================================================================
+   41. FEATURED COLLECTION "RIGHT NOW" — Layout & animation overhaul
+   --------------------------------------------------------------------------
+   Problems fixed:
+   - Removed sticky editorial column (jarring on all viewport sizes)
+   - Changed grid from 1fr 1.6fr to 1fr 1fr for visual balance
+   - Replaced list items with a proper 2×2 product grid on the right
+   - Killed rotate + scale(1.04) on image hover (was the main annoyance)
+   - Killed padding-inline animation on row hover (caused layout shift)
+   - Reduced heading size — 56px was overwhelming for a side column
+   - Kept animation subtle: gentle opacity + translateY only
+   - Editorial column now vertically centered against the product grid
+     so it doesn't look stranded at the top with empty space below
+   ========================================================================== */
+
+/* Section background — keep mint-veil but make it feel lighter */
+.featured-collection {
+  background-color: var(--surface-mid);
+  padding-block: var(--section-gap);
+}
+
+/* Two equal columns — editorial left, product list right */
+.featured-collection__inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-70);
+  align-items: center;
+}
+
+/* Editorial column — no sticky, centered against the taller product grid */
+.featured-collection__editorial {
+  position: static;
+  align-self: center;
+}
+
+/* Heading — pull back from 56px, more proportional beside the list */
+.featured-collection__heading {
+  font-size: clamp(1.85rem, 3.2vw + 0.5rem, 2.6rem);
+  font-weight: 300;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  color: var(--color-forest-ink);
+  margin-bottom: var(--spacing-18);
+}
+
+.featured-collection__description {
+  font-size: 15px;
+  line-height: 1.65;
+  opacity: 0.78;
+  margin-bottom: var(--spacing-35);
+  max-width: 36ch;
+}
+
+.featured-collection__cta {
+  padding: var(--spacing-14) var(--spacing-28);
+}
+
+/* Product list — 2×2 grid instead of a flat list */
+.featured-collection__list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-18);
+}
+
+/* Each featured item — card style, not a row */
+.featured-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  background-color: var(--color-cream-paper);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  border: 1px solid rgba(207, 231, 211, 0.7);
+  /* Reset old grid layout */
+  grid-template-columns: unset;
+  padding-block: 0;
+  border-bottom: none;
+  /* Clean transition — no layout-shifting properties */
+  transition:
+    transform 280ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 280ms ease,
+    border-color 200ms ease;
+}
+
+.featured-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 28px -16px rgba(15, 62, 23, 0.2);
+  border-color: var(--color-sage-mist);
+  /* Reset the annoying background + padding-inline change */
+  background-color: var(--color-cream-paper);
+  padding-inline: 0;
+}
+
+/* Remove old :first-child border-top hack */
+.featured-item:first-child {
+  border-top: none;
+}
+
+/* Image — fills the card top, square crop */
+.featured-item__image {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 0;
+  flex-shrink: 0;
+  /* Simple, clean hover — just a gentle zoom, no rotation */
+  transition: transform 500ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.featured-item:hover .featured-item__image {
+  transform: scale(1.03);
+  /* Remove the old rotate and heavy shadow */
+  box-shadow: none;
+}
+
+/* Details — padding below the image */
+.featured-item__details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-7);
+  padding: var(--spacing-14) var(--spacing-18) var(--spacing-18);
+}
+
+.featured-item__badge {
+  align-self: flex-start;
+}
+
+.featured-item__name {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-weight: 400;
+  line-height: 1.25;
+  color: var(--color-forest-ink);
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.featured-item__price {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-forest-ink);
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+/* Scroll reveal — remove the old animation from the list items
+   (they were animating twice: once as a group, once individually) */
+.featured-collection__list > * {
+  animation: reveal-rise 500ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 55%;
+}
+
+/* ---- Responsive ---- */
+
+/* Tablet: stack columns */
+@media (max-width: 1100px) {
+  .featured-collection__inner {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-42);
+  }
+
+  .featured-collection__editorial {
+    position: static;
+  }
+
+  .featured-collection__description {
+    max-width: none;
+  }
+
+  /* Keep 2×2 product grid on tablet — it fits fine */
+  .featured-collection__list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile: single column everything */
+@media (max-width: 600px) {
+  .featured-collection__inner {
+    gap: var(--spacing-28);
+  }
+
+  .featured-collection__list {
+    grid-template-columns: 1fr 1fr;  /* 2-col still works on 375px+ */
+    gap: var(--spacing-14);
+  }
+
+  .featured-collection__cta {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 380px) {
+  .featured-collection__list {
+    grid-template-columns: 1fr;
   }
 }

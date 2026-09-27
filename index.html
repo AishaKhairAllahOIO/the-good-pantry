@@ -103,7 +103,7 @@
       <div class="container">
         <h2 class="categories__heading" id="categories-heading">Shop by Category</h2>
         <ul class="categories__list" role="list">
-          <li class="category-item" id="breakfast">
+          <li class="category-item" id="breakfast" data-reveal>
             <a href="#breakfast" class="category-item__link">
               <img
                 src="assets/images/category-breakfast.webp"
@@ -118,7 +118,7 @@
               <span class="category-item__descriptor">Oats, granola &amp; morning staples</span>
             </a>
           </li>
-          <li class="category-item" id="snacks">
+          <li class="category-item" id="snacks" data-reveal>
             <a href="#snacks" class="category-item__link">
               <img
                 src="assets/images/category-snacks.webp"
@@ -133,7 +133,7 @@
               <span class="category-item__descriptor">Nuts, bars &amp; honest bites</span>
             </a>
           </li>
-          <li class="category-item" id="pantry">
+          <li class="category-item" id="pantry" data-reveal>
             <a href="#pantry" class="category-item__link">
               <img
                 src="assets/images/category-pantry.webp"
@@ -148,7 +148,7 @@
               <span class="category-item__descriptor">Oils, grains, sauces &amp; the basics</span>
             </a>
           </li>
-          <li class="category-item" id="drinks">
+          <li class="category-item" id="drinks" data-reveal>
             <a href="#drinks" class="category-item__link">
               <img
                 src="assets/images/category-drinks.webp"
@@ -179,7 +179,7 @@
         </div>
         <ul class="product-grid" role="list">
 
-          <li class="product-card">
+          <li class="product-card" data-reveal>
             <a href="#product-oat-clusters" class="product-card__image-link" aria-label="View Rolled Oat Clusters">
               <img
                 src="assets/images/product-oat-clusters.webp"
@@ -203,7 +203,7 @@
             </div>
           </li>
 
-          <li class="product-card">
+          <li class="product-card" data-reveal>
             <a href="#product-nut-butter" class="product-card__image-link" aria-label="View Mixed Nut Butter">
               <img
                 src="assets/images/product-nut-butter.webp"
@@ -227,7 +227,7 @@
             </div>
           </li>
 
-          <li class="product-card">
+          <li class="product-card" data-reveal>
             <a href="#product-olive-oil" class="product-card__image-link" aria-label="View Cold-Pressed Olive Oil">
               <img
                 src="assets/images/product-olive-oil.webp"
@@ -251,7 +251,7 @@
             </div>
           </li>
 
-          <li class="product-card">
+          <li class="product-card" data-reveal>
             <a href="#product-green-tea" class="product-card__image-link" aria-label="View Loose Leaf Green Tea">
               <img
                 src="assets/images/product-green-tea.webp"
@@ -286,7 +286,7 @@
         <h2 class="why-us__heading" id="why-us-heading">The way we think about food</h2>
         <ul class="benefits-grid" role="list">
 
-          <li class="benefit-card">
+          <li class="benefit-card" data-reveal>
             <img
               src="assets/icons/icon-leaf.svg"
               alt=""
@@ -299,7 +299,7 @@
             <p class="benefit-card__body">We read every label. If we wouldn't buy it ourselves, it doesn't make the shelf.</p>
           </li>
 
-          <li class="benefit-card">
+          <li class="benefit-card" data-reveal>
             <img
               src="assets/icons/icon-box.svg"
               alt=""
@@ -312,7 +312,7 @@
             <p class="benefit-card__body">Fair sizes, fair prices. No inflated packaging or shrinkflation here.</p>
           </li>
 
-          <li class="benefit-card">
+          <li class="benefit-card" data-reveal>
             <img
               src="assets/icons/icon-truck.svg"
               alt=""
@@ -342,7 +342,7 @@
 
         <ul class="featured-collection__list" role="list">
 
-          <li class="featured-item">
+          <li class="featured-item" data-reveal="scale">
             <img
               src="assets/images/product-porridge-oats.webp"
               alt="Bag of Jumbo Porridge Oats"
@@ -359,7 +359,7 @@
             </div>
           </li>
 
-          <li class="featured-item">
+          <li class="featured-item" data-reveal="scale">
             <img
               src="assets/images/product-chia-jam.webp"
               alt="Jar of Chia and Berry Jam"
@@ -376,7 +376,7 @@
             </div>
           </li>
 
-          <li class="featured-item">
+          <li class="featured-item" data-reveal="scale">
             <img
               src="assets/images/product-almond-granola.webp"
               alt="Bag of Almond Granola"
@@ -393,7 +393,7 @@
             </div>
           </li>
 
-          <li class="featured-item">
+          <li class="featured-item" data-reveal="scale">
             <img
               src="assets/images/product-oat-milk.webp"
               alt="Six-pack of Oat Milk cartons"
@@ -429,7 +429,7 @@
 
         <ul class="recipes__grid" role="list">
 
-          <li class="recipe-card">
+          <li class="recipe-card" data-reveal>
             <a href="#recipe-overnight-oats" class="recipe-card__link" aria-label="Read recipe: Five-minute overnight oats">
               <div class="recipe-card__image-wrap">
                 <img
@@ -452,7 +452,7 @@
             </a>
           </li>
 
-          <li class="recipe-card">
+          <li class="recipe-card" data-reveal>
             <a href="#recipe-granola-bowl" class="recipe-card__link" aria-label="Read recipe: Granola breakfast bowl">
               <div class="recipe-card__image-wrap">
                 <img
@@ -475,7 +475,7 @@
             </a>
           </li>
 
-          <li class="recipe-card">
+          <li class="recipe-card" data-reveal>
             <a href="#recipe-olive-oil-dressing" class="recipe-card__link" aria-label="Read recipe: Quick olive oil vinaigrette">
               <div class="recipe-card__image-wrap">
                 <img
@@ -608,6 +608,69 @@
     </div>
 
   </footer>
+
+  <script>
+    (function () {
+      var revealItems = document.querySelectorAll('[data-reveal]');
+
+      if (!revealItems.length) return;
+
+      if (!('IntersectionObserver' in window)) {
+        revealItems.forEach(function (el) { el.setAttribute('data-revealed', ''); });
+        return;
+      }
+
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          var el = entry.target;
+          var siblings = Array.prototype.filter.call(
+            el.parentElement.children,
+            function (child) { return child.hasAttribute('data-reveal'); }
+          );
+          var index = siblings.indexOf(el);
+          el.style.setProperty('--reveal-delay', Math.min(index, 5) * 90 + 'ms');
+          el.setAttribute('data-revealed', '');
+          observer.unobserve(el);
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+
+      revealItems.forEach(function (el) { observer.observe(el); });
+    })();
+
+    // Mobile nav toggle
+    (function () {
+      var toggle = document.querySelector('.site-nav__toggle');
+      var nav = document.querySelector('.site-nav');
+      if (!toggle || !nav) return;
+
+      function closeNav() {
+        if (!nav.classList.contains('is-open')) return;
+        nav.classList.remove('is-open');
+        toggle.setAttribute('aria-expanded', 'false');
+      }
+
+      toggle.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var isOpen = nav.classList.toggle('is-open');
+        toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      });
+
+      // Close when clicking/tapping outside the menu
+      document.addEventListener('click', function (e) {
+        if (nav.contains(e.target) || toggle.contains(e.target)) return;
+        closeNav();
+      });
+
+      // Close when the page is scrolled while the menu is open
+      window.addEventListener('scroll', closeNav, { passive: true });
+
+      // Close on Escape for keyboard users
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeNav();
+      });
+    })();
+  </script>
 
 </body>
 </html>
