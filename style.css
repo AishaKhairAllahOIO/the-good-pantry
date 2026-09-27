@@ -2869,3 +2869,141 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
+/* FINAL REFINEMENTS */
+.site-header__logo{font-size:clamp(1.65rem,2vw,2rem);line-height:1;white-space:nowrap}.site-header__inner{gap:var(--spacing-21)}.site-nav{margin-left:auto}.site-nav__list{gap:clamp(6px,1vw,18px)}.site-nav__link{font-size:13px;padding-inline:6px;white-space:nowrap}.featured-collection__inner{grid-template-columns:minmax(280px,.72fr) minmax(0,1.28fr);gap:clamp(32px,4vw,56px)}.featured-collection__editorial{max-width:430px}.featured-collection__list{gap:16px}.featured-item__image{aspect-ratio:4/3}.featured-item__details{padding:12px 16px 16px}.featured-collection__list>*{animation:none;animation-timeline:auto}[data-reveal]{transition-duration:700ms;transition-timing-function:var(--ease-out-expo)}
+@media(max-width:1320px) and (min-width:768px){.site-header__cta{display:none}.site-nav__list{gap:5px}.site-nav__link{font-size:12px;padding-inline:5px}}
+@media(max-width:1100px){.featured-collection__inner{grid-template-columns:1fr}.featured-collection__editorial{max-width:620px}}
+@media(max-width:767px){.site-header__logo{font-size:1.5rem}.site-nav__link{font-size:14px;padding:var(--spacing-14) 0}}
+
+/* ========================================================================== 
+   FINAL UX FIX — compact Right Now, smooth reveal, fixed navigation
+   ========================================================================== */
+
+/* Keep the navigation permanently visible while scrolling. */
+.site-header {
+  position: fixed;
+  inset: 0 0 auto 0;
+  width: 100%;
+  z-index: 1000;
+  background: rgba(255, 254, 252, 0.96);
+  border-bottom: 1px solid var(--color-border-mist);
+  box-shadow: 0 8px 24px -22px rgba(15, 62, 23, 0.35);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Fixed header must not cover the beginning of the page. */
+body { padding-top: 64px; }
+html { scroll-padding-top: 88px; }
+
+/* Remove scroll-driven header resizing: it caused visual jitter. */
+.site-header__inner {
+  height: 64px;
+  animation: none !important;
+}
+
+/* Right Now: one editorial column + only two visible feature cards.
+   This avoids the oversized 2x2 wall of photography. */
+.featured-collection {
+  padding-block: clamp(64px, 7vw, 96px);
+}
+
+.featured-collection__inner {
+  grid-template-columns: minmax(280px, .8fr) minmax(0, 1.2fr);
+  gap: clamp(40px, 6vw, 88px);
+  align-items: center;
+}
+
+.featured-collection__editorial {
+  max-width: 410px;
+}
+
+.featured-collection__list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+/* Reduce visual density: the first two products are enough for this editorial block. */
+.featured-collection__list .featured-item:nth-child(n + 3) {
+  display: none;
+}
+
+.featured-item {
+  min-width: 0;
+  border-radius: 16px;
+  transform: none;
+}
+
+.featured-item__image {
+  width: 100%;
+  height: clamp(190px, 20vw, 285px);
+  aspect-ratio: auto;
+  object-fit: cover;
+  transition: transform 600ms var(--ease-out-soft);
+}
+
+.featured-item:hover {
+  transform: translateY(-2px);
+}
+
+.featured-item:hover .featured-item__image {
+  transform: scale(1.018);
+}
+
+.featured-item__details {
+  padding: 16px 18px 18px;
+}
+
+/* Smooth, restrained scroll reveal. No scale effects and no view-timeline animations. */
+:root { --reveal-shift: 10px; }
+
+[data-reveal],
+[data-reveal="fade"],
+[data-reveal="scale"] {
+  opacity: 0;
+  transform: translate3d(0, 10px, 0);
+  transition-property: opacity, transform;
+  transition-duration: 760ms;
+  transition-timing-function: cubic-bezier(.22, 1, .36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+[data-reveal="fade"] { transform: none; }
+
+[data-revealed] {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.featured-collection__list > * {
+  animation: none !important;
+  animation-timeline: auto !important;
+}
+
+@media (max-width: 1100px) {
+  .featured-collection__inner {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+  .featured-collection__editorial { max-width: 620px; }
+  .featured-item__image { height: clamp(220px, 35vw, 340px); }
+}
+
+@media (max-width: 767px) {
+  body { padding-top: 56px; }
+  .site-header__inner { height: 56px; }
+  html { scroll-padding-top: 72px; }
+  .featured-collection__list { grid-template-columns: 1fr; }
+  .featured-item__image { height: min(64vw, 320px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal], [data-reveal="fade"], [data-reveal="scale"] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
